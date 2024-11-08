@@ -9,7 +9,6 @@ import org.example.individualwork.DTO.authDTO.AuthRegisterForSotuvDTO;
 import org.example.individualwork.repository.SotuvchiRepository;
 import org.example.individualwork.model.Sotuvchi;
 import org.example.individualwork.exception.SotuvchiExceptions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -23,19 +22,21 @@ import org.apache.logging.log4j.Logger;
 public class SotuvchiService {
 
 
-    @Autowired
-    private SotuvchiRepository sotuvchiRep;
+    private final SotuvchiRepository sotuvchiRep;
 
     final private SotuvchiMapper sotuvchiMap = new SotuvchiMapper();
 
-    Logger logger = LogManager.getLogger(SotuvchiService.class);
+    final private Logger logger = LogManager.getLogger(SotuvchiService.class);
+
+    public SotuvchiService(SotuvchiRepository sotuvchiRep) {
+        this.sotuvchiRep = sotuvchiRep;
+    }
 
     // admin
     // barcha sotuvchilar ro'yhatini olish
     public List<SotuvchiDTO> getAllSotuvchiAsDTO() {
         return sotuvchiMap.toSotuvchiDTO(sotuvchiRep.findAll());
     }
-
 
     public List<Sotuvchi> getAllSotuvchi() {
         return sotuvchiRep.findAll();
@@ -45,11 +46,8 @@ public class SotuvchiService {
     // active sotuvchilar ro'yhatini olish
     public List<SotuvchiDTO> getActiveSotuvchi() {
         List<Sotuvchi> activeSotuvchiList = getAllSotuvchi();
-        for (Sotuvchi s : activeSotuvchiList) {
-            if (LocalDateTime.now().isAfter(s.getToDate())) {
-                activeSotuvchiList.remove(s);
-            }
-        }
+        activeSotuvchiList.removeIf(s -> LocalDateTime.now().isAfter(s.getToDate())
+                || s.getRole().toString().equals("ADMIN"));
         return sotuvchiMap.toSotuvchiDTO(activeSotuvchiList);
     }
 
@@ -57,11 +55,18 @@ public class SotuvchiService {
     // inactive sotuvchilar ro'yhatini olish
     public List<SotuvchiDTO> getInactiveSotuvchi() {
         List<Sotuvchi> inActiveSotuvchiList = getAllSotuvchi();
-        for (Sotuvchi s : inActiveSotuvchiList) {
-            if (LocalDateTime.now().isBefore(s.getToDate())) {
-                inActiveSotuvchiList.remove(s);
-            }
+
+        if (inActiveSotuvchiList == null) {
+            throw new NullPointerException("The list of Sotuvchi is null. Expected a non-null list from getAllSotuvchi().");
         }
+
+        inActiveSotuvchiList.removeIf(s -> {
+            if (s.getToDate() == null) {
+                throw new NullPointerException("Encountered a Sotuvchi with a null 'toDate' field.");
+            }
+            return LocalDateTime.now().isBefore(s.getToDate());
+        });
+
         return sotuvchiMap.toSotuvchiDTO(inActiveSotuvchiList);
     }
 
@@ -78,13 +83,14 @@ public class SotuvchiService {
     public SotuvchiDTO changeSotuvchiDetails(SotuvOzgarQiymat sotuvOzgarQiymat) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         existsByUsername(sotuvOzgarQiymat.getUsername());
+        logger.info("UserID: {} \n User details were changed", ((Sotuvchi) authentication.getPrincipal()).getId());
         return sotuvchiMap.toSotuvchiDTO(sotuvchiRep.save(
                 sotuvchiMap.changeSotuvchiDetails((Sotuvchi) authentication.getPrincipal(), sotuvOzgarQiymat)));
     }
 
     private void existsByUsername(String username) {
         if (sotuvchiRep.existsByUsername(username)) {
-            logger.error("Username oldindan mavjud: " + username);
+            logger.error("Username oldindan mavjud: {}", username);
             throw new SotuvchiExceptions
                     .UsernameAlreadyTakenException("Username oldindan mavjud: " + username);
         }
@@ -96,8 +102,7 @@ public class SotuvchiService {
         Sotuvchi sotuvchi = ((sotuvchiRep.findById(changeSotuvDate.getId())).get());
         timeChecker(changeSotuvDate.getLocalDateTime());
         sotuvchi.setToDate(changeSotuvDate.getLocalDateTime());
-        logger.info("User id: " + sotuvchi.getId() + "\n"
-                + "toDate: " + changeSotuvDate.getLocalDateTime());
+        logger.info("User id: {}\ntoDate: {}", sotuvchi.getId(), changeSotuvDate.getLocalDateTime());
         return sotuvchiRep.save(sotuvchi).getToDate().toString();
     }
 

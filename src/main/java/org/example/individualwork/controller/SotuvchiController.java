@@ -25,21 +25,25 @@ public class SotuvchiController {
     // admin
     @PreAuthorize(value = "hasRole('ADMIN')")
     @GetMapping(value = "/getAllSotuvchiAsDTO")
-    public List<SotuvchiDTO> getAllSotuvchiAsDTO() {
-        return sotuvchiSer.getAllSotuvchiAsDTO();
+    public ResponseEntity<List<SotuvchiDTO>> getAllSotuvchiAsDTO() {
+        return ResponseEntity.ok(sotuvchiSer.getAllSotuvchiAsDTO());
     }
 
     // admin
     @PreAuthorize(value = "hasRole('ADMIN')")
     @GetMapping(value = "/getInactiveSotuvchi")
-    public List<SotuvchiDTO> getInactiveSotuvchi() {
-        return sotuvchiSer.getInactiveSotuvchi();
+    public ResponseEntity<Object> getInactiveSotuvchi() {
+        try {
+            return ResponseEntity.ok(sotuvchiSer.getInactiveSotuvchi());
+        } catch (SotuvchiExceptions.NullPointerException exception) {
+            return new ResponseEntity<>(exception.getMessage(), exception.getStatus());
+        }
     }
 
     // permit all
     @GetMapping(value = "/getActiveSotuvchi")
-    public List<SotuvchiDTO> getActiveSotuvchi() {
-        return sotuvchiSer.getActiveSotuvchi();
+    public ResponseEntity<List<SotuvchiDTO>> getActiveSotuvchi() {
+        return ResponseEntity.ok(sotuvchiSer.getActiveSotuvchi());
     }
 
     // admin
@@ -63,8 +67,8 @@ public class SotuvchiController {
             return ResponseEntity.ok(sotuvchiSer.changeSotuvchiDetails(sotuvOzgarQiymat));
         } catch (SotuvchiExceptions.UsernameAlreadyTakenException exception) {
             return new ResponseEntity<>(exception.getMessage(), exception.getStatus());
-        }catch (SotuvchiExceptions.AccountExpiredException exception){
-            return new ResponseEntity<>(exception.getMessage(),exception.getStatus());
+        } catch (SotuvchiExceptions.AccountExpiredException exception) {
+            return new ResponseEntity<>(exception.getMessage(), exception.getStatus());
         }
     }
 

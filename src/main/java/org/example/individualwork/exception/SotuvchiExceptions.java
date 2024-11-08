@@ -58,6 +58,23 @@ public class SotuvchiExceptions {
         public InvalidUsernameOrPasswordException(String message) {
             super(message);
         }
+    }
 
+    @Getter
+    public static class NullPointerException extends RuntimeException {
+        private final HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
+
+        public NullPointerException(String message) {
+            super(message);
+        }
+    }
+
+    @Getter
+    public static class AuthenticationException extends RuntimeException{
+        private final HttpStatus status = HttpStatus.UNAUTHORIZED;
+
+        public AuthenticationException(String message) {
+            super(message);
+        }
     }
 }
