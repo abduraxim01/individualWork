@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class AuthRegisterForSotuvDTO {
 
-
     private String username;
     private String password;
     private LocalDateTime toDate;

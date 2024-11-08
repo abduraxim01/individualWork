@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AuthLoginDTO {
 
-
     private String username;
     private String password;
 }

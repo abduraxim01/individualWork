@@ -1,6 +1,7 @@
 package org.example.individualwork.DTO.sotuvchiDTO;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.individualwork.DTO.MahsulotDTO;
@@ -10,11 +11,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class SotuvchiDTO {
 
-
+    private Long id;
     private String username;
     private String password;
     private String image;

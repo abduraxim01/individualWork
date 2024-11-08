@@ -1,20 +1,25 @@
 package org.example.individualwork.controller.auth;
 
+import org.example.individualwork.DTO.authDTO.AuthRegisterForSotuvDTO;
+import org.example.individualwork.DTO.sotuvchiDTO.SotuvchiDTO;
+import org.example.individualwork.model.Sotuvchi;
 import org.example.individualwork.service.auth.LoginService;
 import org.example.individualwork.DTO.authDTO.AuthLoginDTO;
 import org.example.individualwork.exception.SotuvchiExceptions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/api/login")
+@RequestMapping(value = "/api")
 public class AuthController {
 
-    @Autowired
-    private LoginService loginService;
+    private final LoginService loginService;
 
-    @GetMapping
+    public AuthController(LoginService loginService) {
+        this.loginService = loginService;
+    }
+
+    @GetMapping(value = "/login")
     public ResponseEntity<Object> login(@RequestBody AuthLoginDTO authLoginDTO) {
         try {
             return ResponseEntity.ok(loginService.login(authLoginDTO));
@@ -25,4 +30,8 @@ public class AuthController {
         }
     }
 
+    @PostMapping(value = "/register")
+    public Sotuvchi register(@RequestBody AuthRegisterForSotuvDTO authRegisterForSotuvDTO) {
+        return loginService.register(authRegisterForSotuvDTO);
+    }
 }

@@ -2,6 +2,7 @@ package org.example.individualwork.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -15,15 +16,17 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-@Table(name = "sotuvchilar")
+@Table
 @Entity
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Sotuvchi implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sotuvchi_seq")
+    @SequenceGenerator(name = "sotuvchi_seq", sequenceName = "sotuvchi_sequence", initialValue = 100000, allocationSize = 1)
     private Long id;
 
     @Column(unique = true, nullable = false, length = 25)

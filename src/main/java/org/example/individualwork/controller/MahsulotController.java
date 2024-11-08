@@ -1,15 +1,15 @@
 package org.example.individualwork.controller;
 
+import org.example.individualwork.exception.SotuvchiExceptions;
 import org.example.individualwork.service.MahsulotService;
 import org.example.individualwork.DTO.MahsulotDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping(value = "/api/mahsulot")
@@ -22,8 +22,12 @@ public class MahsulotController {
     // admin
     @PreAuthorize(value = "hasRole('ADMIN')")
     @GetMapping(value = "/getAllMahsulot")
-    public List<MahsulotDTO> getAllMahsulot() {
-        return mahsulotSer.getAllMahsulot();
+    public ResponseEntity<Object> getAllMahsulot() {
+        try {
+            return ResponseEntity.ok(mahsulotSer.getAllMahsulot());
+        } catch (SotuvchiExceptions.IllegalArgumentException exception) {
+            return new ResponseEntity<>(exception.getMessage(), exception.getStatus());
+        }
     }
 
     // admin
@@ -36,27 +40,47 @@ public class MahsulotController {
 
     // permit all
     @GetMapping(value = "/getActiveMahsulot")
-    public List<MahsulotDTO> getActiveMahsulot() {
-        return mahsulotSer.getActiveMahsulot();
+    public ResponseEntity<Object> getActiveMahsulot() {
+        try {
+            return ResponseEntity.ok(mahsulotSer.getActiveMahsulot());
+        } catch (SotuvchiExceptions.IllegalArgumentException exception) {
+            return new ResponseEntity<>(exception.getMessage(), exception.getStatus());
+        }
     }
 
     // permit all
-    @GetMapping(value = "/getActiveMahsulot/BySotuvchi")
-    public List<MahsulotDTO> getActiveMahsulot(Long id) {
-        return mahsulotSer.getActiveMahsulot(id);
+    @GetMapping(value = "/getActiveMahsulot/{id}")
+    public ResponseEntity<Object> getActiveMahsulot(@PathVariable(name = "id") Long id) {
+        try {
+            return ResponseEntity.ok(mahsulotSer.getActiveMahsulot(id));
+        } catch (SotuvchiExceptions.NullPointerException exception) {
+            return new ResponseEntity<>(exception.getMessage(), exception.getStatus());
+        } catch (SotuvchiExceptions.IllegalArgumentException exception) {
+            return new ResponseEntity<>(exception.getMessage(), exception.getStatus());
+        }
     }
 
     // admin
     @PreAuthorize(value = "hasRole('ADMIN')")
-    @GetMapping(value = "/getInActiveMahsulot")
-    public List<MahsulotDTO> getInActiveMahsulot(Long id) {
-        return mahsulotSer.getInActiveMahsulot(id);
+    @GetMapping(value = "/getInActiveMahsulot/{id}")
+    public ResponseEntity<Object> getInActiveMahsulot(@PathVariable(name = "id") Long id) {
+        try {
+            return ResponseEntity.ok(mahsulotSer.getInActiveMahsulot(id));
+        } catch (SotuvchiExceptions.NullPointerException exception) {
+            return new ResponseEntity<>(exception.getMessage(), exception.getStatus());
+        } catch (SotuvchiExceptions.IllegalArgumentException exception) {
+            return new ResponseEntity<>(exception.getMessage(), exception.getStatus());
+        }
     }
 
     // sotuvchi uchun
     @PreAuthorize(value = "hasRole('USER')")
     @PostMapping(value = "/addMahsulot")
-    public MahsulotDTO addMahsulot(Long id, MahsulotDTO mahsulotDTO) {
-        return mahsulotSer.addMahsulot(id, mahsulotDTO);
+    public ResponseEntity<Object> addMahsulot(@RequestBody MahsulotDTO mahsulotDTO) {
+        try {
+            return ResponseEntity.ok(mahsulotSer.addMahsulot(mahsulotDTO));
+        } catch (SotuvchiExceptions.IllegalArgumentException exception) {
+            return new ResponseEntity<>(exception.getMessage(), exception.getStatus());
+        }
     }
 }

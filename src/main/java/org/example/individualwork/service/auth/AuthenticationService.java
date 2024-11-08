@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthenticationService implements UserDetailsService {
 
-    private final SotuvchiRepository sotuvchiRepository;
+    final private SotuvchiRepository sotuvchiRepository;
 
     public AuthenticationService(SotuvchiRepository sotuvchiRepository) {
         this.sotuvchiRepository = sotuvchiRepository;
