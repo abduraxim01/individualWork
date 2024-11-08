@@ -18,7 +18,7 @@ public class AuthController {
     public AuthController(LoginService loginService) {
         this.loginService = loginService;
     }
-
+  
     @GetMapping(value = "/login")
     public ResponseEntity<Object> login(@RequestBody AuthLoginDTO authLoginDTO) {
         try {
