@@ -10,10 +10,14 @@ import org.example.individualwork.model.Sotuvchi;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class SotuvchiMapper {
+
+    final private Logger logger = Logger.getLogger(SotuvchiMapper.class.getName());
 
     final private MahsulotMapper mahsulotMapper = new MahsulotMapper();
 
@@ -24,6 +28,8 @@ public class SotuvchiMapper {
         optionalSotuvchi.setPassword(passwordEncoder.encode(ozgarQiymat.getPassword()));
         optionalSotuvchi.setImage(ozgarQiymat.getImage());
         optionalSotuvchi.setName(ozgarQiymat.getName());
+        logger.info("User id: " + optionalSotuvchi.getId() + "\n"
+                + "User details were changed");
         return optionalSotuvchi;
     }
 
@@ -36,11 +42,11 @@ public class SotuvchiMapper {
                 .build();
     }
 
-    public Sotuvchi toSotuvchiForReg(AuthRegisterForSotuvDTO authRegisterForSotuvDTO) {
+    public Sotuvchi toSotuvchiForReg(AuthLoginDTO authLoginDTO) {
         return Sotuvchi.builder()
-                .username(authRegisterForSotuvDTO.getUsername())
-                .password(passwordEncoder.encode(authRegisterForSotuvDTO.getPassword()))
-                .toDate(authRegisterForSotuvDTO.getToDate())
+                .username(authLoginDTO.getUsername())
+                .password(passwordEncoder.encode(authLoginDTO.getPassword()))
+                .toDate(LocalDateTime.of(2025,12,14,15,12,11))
                 .role(Rollar.ADMIN)
                 .build();
     }

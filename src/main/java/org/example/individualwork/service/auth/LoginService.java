@@ -49,7 +49,7 @@ public class LoginService {
         }
     }
 
-    public Sotuvchi register(AuthRegisterForSotuvDTO authRegisterForSotuvDTO){
-        return sotuvchiRepository.save(mapper.toSotuvchiForReg(authRegisterForSotuvDTO));
+    public Sotuvchi reg(AuthLoginDTO dto){
+        return sotuvchiRepository.save(mapper.toSotuvchiForReg(dto));
     }
 }

@@ -6,6 +6,7 @@ import org.example.individualwork.model.Sotuvchi;
 import org.example.individualwork.service.auth.LoginService;
 import org.example.individualwork.DTO.authDTO.AuthLoginDTO;
 import org.example.individualwork.exception.SotuvchiExceptions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,11 +14,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/api")
 public class AuthController {
 
-    private final LoginService loginService;
-
-    public AuthController(LoginService loginService) {
-        this.loginService = loginService;
-    }
+    @Autowired
+    private LoginService loginService;
 
     @GetMapping(value = "/login")
     public ResponseEntity<Object> login(@RequestBody AuthLoginDTO authLoginDTO) {
@@ -30,8 +28,8 @@ public class AuthController {
         }
     }
 
-    @PostMapping(value = "/register")
-    public Sotuvchi register(@RequestBody AuthRegisterForSotuvDTO authRegisterForSotuvDTO) {
-        return loginService.register(authRegisterForSotuvDTO);
+    @PostMapping(value = "/reg")
+    public Sotuvchi reg(@RequestBody AuthLoginDTO dto) {
+        return loginService.reg(dto);
     }
 }

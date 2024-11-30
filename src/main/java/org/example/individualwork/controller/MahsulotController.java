@@ -16,18 +16,15 @@ import java.util.Objects;
 public class MahsulotController {
 
 
+
     @Autowired
     private MahsulotService mahsulotSer;
 
     // admin
     @PreAuthorize(value = "hasRole('ADMIN')")
     @GetMapping(value = "/getAllMahsulot")
-    public ResponseEntity<Object> getAllMahsulot() {
-        try {
-            return ResponseEntity.ok(mahsulotSer.getAllMahsulot());
-        } catch (SotuvchiExceptions.IllegalArgumentException exception) {
-            return new ResponseEntity<>(exception.getMessage(), exception.getStatus());
-        }
+    public ResponseEntity<List<MahsulotDTO>> getAllMahsulot() {
+        return ResponseEntity.ok(mahsulotSer.getAllMahsulot());
     }
 
     // admin
@@ -40,37 +37,21 @@ public class MahsulotController {
 
     // permit all
     @GetMapping(value = "/getActiveMahsulot")
-    public ResponseEntity<Object> getActiveMahsulot() {
-        try {
-            return ResponseEntity.ok(mahsulotSer.getActiveMahsulot());
-        } catch (SotuvchiExceptions.IllegalArgumentException exception) {
-            return new ResponseEntity<>(exception.getMessage(), exception.getStatus());
-        }
+    public ResponseEntity<List<MahsulotDTO>> getActiveMahsulot() {
+        return ResponseEntity.ok(mahsulotSer.getActiveMahsulot());
     }
 
     // permit all
-    @GetMapping(value = "/getActiveMahsulot/{id}")
-    public ResponseEntity<Object> getActiveMahsulot(@PathVariable(name = "id") Long id) {
-        try {
-            return ResponseEntity.ok(mahsulotSer.getActiveMahsulot(id));
-        } catch (SotuvchiExceptions.NullPointerException exception) {
-            return new ResponseEntity<>(exception.getMessage(), exception.getStatus());
-        } catch (SotuvchiExceptions.IllegalArgumentException exception) {
-            return new ResponseEntity<>(exception.getMessage(), exception.getStatus());
-        }
+    @GetMapping(value = "/getActiveMahsulot/ByID/{id}")
+    public List<MahsulotDTO> getActiveMahsulot(@PathVariable(name = "id") Long id) {
+        return mahsulotSer.getActiveMahsulot(id);
     }
 
     // admin
     @PreAuthorize(value = "hasRole('ADMIN')")
-    @GetMapping(value = "/getInActiveMahsulot/{id}")
-    public ResponseEntity<Object> getInActiveMahsulot(@PathVariable(name = "id") Long id) {
-        try {
-            return ResponseEntity.ok(mahsulotSer.getInActiveMahsulot(id));
-        } catch (SotuvchiExceptions.NullPointerException exception) {
-            return new ResponseEntity<>(exception.getMessage(), exception.getStatus());
-        } catch (SotuvchiExceptions.IllegalArgumentException exception) {
-            return new ResponseEntity<>(exception.getMessage(), exception.getStatus());
-        }
+    @GetMapping(value = "/getInActiveMahsulot")
+    public List<MahsulotDTO> getInActiveMahsulot(Long id) {
+        return mahsulotSer.getInActiveMahsulot(id);
     }
 
     // sotuvchi uchun
@@ -79,7 +60,7 @@ public class MahsulotController {
     public ResponseEntity<Object> addMahsulot(@RequestBody MahsulotDTO mahsulotDTO) {
         try {
             return ResponseEntity.ok(mahsulotSer.addMahsulot(mahsulotDTO));
-        } catch (SotuvchiExceptions.IllegalArgumentException exception) {
+        } catch (SotuvchiExceptions.Exception exception) {
             return new ResponseEntity<>(exception.getMessage(), exception.getStatus());
         }
     }
