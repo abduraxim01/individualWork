@@ -28,6 +28,7 @@ public class AuthController {
         }
     }
 
+
     @PostMapping(value = "/reg")
     public Sotuvchi reg(@RequestBody AuthLoginDTO dto) {
         return loginService.reg(dto);
