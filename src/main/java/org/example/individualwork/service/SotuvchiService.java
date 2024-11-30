@@ -9,6 +9,7 @@ import org.example.individualwork.DTO.authDTO.AuthRegisterForSotuvDTO;
 import org.example.individualwork.repository.SotuvchiRepository;
 import org.example.individualwork.model.Sotuvchi;
 import org.example.individualwork.exception.SotuvchiExceptions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ import org.apache.logging.log4j.Logger;
 @Service
 public class SotuvchiService {
 
-
+    @Autowired
     private final SotuvchiRepository sotuvchiRep;
 
     final private SotuvchiMapper sotuvchiMap = new SotuvchiMapper();

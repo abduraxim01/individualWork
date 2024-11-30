@@ -1,4 +1,21 @@
- @Autowired
+package org.example.individualwork.controller;
+
+import org.example.individualwork.DTO.MahsulotDTO;
+import org.example.individualwork.exception.SotuvchiExceptions;
+import org.example.individualwork.service.MahsulotService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping(value = "/api/mahsulot")
+public class MahsulotController {
+
+    @Autowired
     private MahsulotService mahsulotSer;
 
     // admin
@@ -45,3 +62,4 @@
             return new ResponseEntity<>(exception.getMessage(), exception.getStatus());
         }
     }
+}

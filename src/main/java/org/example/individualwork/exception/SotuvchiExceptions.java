@@ -67,6 +67,5 @@ public class SotuvchiExceptions {
         public Exception(String message) {
             super(message);
         }
-
     }
 }
