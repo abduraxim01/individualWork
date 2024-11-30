@@ -24,7 +24,7 @@ public class MahsulotMapper {
 
     public MahsulotDTO toMahsulotDTO(Mahsulot mahsulot) {
         return MahsulotDTO.builder()
-                .id(mahsulot.getId())
+//                .id(mahsulot.getId())
                 .body(mahsulot.getBody())
                 .title(mahsulot.getTitle())
                 .discount(mahsulot.getDiscount())

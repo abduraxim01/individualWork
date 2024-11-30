@@ -13,8 +13,7 @@ import java.time.LocalDateTime;
 @Builder
 public class MahsulotDTO {
 
-
-    private Long id;
+    
     private String title;
     private String body;
     private String image;

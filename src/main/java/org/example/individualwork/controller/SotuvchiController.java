@@ -1,21 +1,17 @@
 package org.example.individualwork.controller;
 
 import org.example.individualwork.service.SotuvchiService;
-import org.example.individualwork.DTO.sotuvchiDTO.SotuvchiDTO;
 import org.example.individualwork.exception.SotuvchiExceptions;
 import org.example.individualwork.DTO.sotuvchiDTO.SotuvOzgarQiymat;
 import org.example.individualwork.DTO.sotuvchiDTO.ChangeSotuvDate;
 import org.example.individualwork.DTO.authDTO.AuthRegisterForSotuvDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping(value = "/api/sotuvchi", consumes = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/sotuvchi")
 public class SotuvchiController {
 
    @Autowired

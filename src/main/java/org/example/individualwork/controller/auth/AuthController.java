@@ -1,7 +1,6 @@
 package org.example.individualwork.controller.auth;
 
-import org.example.individualwork.DTO.authDTO.AuthRegisterForSotuvDTO;
-import org.example.individualwork.DTO.sotuvchiDTO.SotuvchiDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.example.individualwork.model.Sotuvchi;
 import org.example.individualwork.service.auth.LoginService;
 import org.example.individualwork.DTO.authDTO.AuthLoginDTO;
@@ -26,7 +25,6 @@ public class AuthController {
             return new ResponseEntity<>(exception.getMessage(), exception.getStatus());
         }
     }
-
 
     @PostMapping(value = "/reg")
     public Sotuvchi reg(@RequestBody AuthLoginDTO dto) {
