@@ -13,11 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class SotuvchiMapper {
-
-    final private Logger logger = Logger.getLogger(SotuvchiMapper.class.getName());
 
     final private MahsulotMapper mahsulotMapper = new MahsulotMapper();
 
@@ -28,8 +25,6 @@ public class SotuvchiMapper {
         optionalSotuvchi.setPassword(passwordEncoder.encode(ozgarQiymat.getPassword()));
         optionalSotuvchi.setImage(ozgarQiymat.getImage());
         optionalSotuvchi.setName(ozgarQiymat.getName());
-        logger.info("User id: " + optionalSotuvchi.getId() + "\n"
-                + "User details were changed");
         return optionalSotuvchi;
     }
 

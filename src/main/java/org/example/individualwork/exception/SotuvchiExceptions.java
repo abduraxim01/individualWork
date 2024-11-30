@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 public class SotuvchiExceptions {
 
 
-    @Getter
+   @Getter
     public static class UsernameAlreadyTakenException extends RuntimeException {
         private final HttpStatus status = HttpStatus.CONFLICT;
 

@@ -18,7 +18,7 @@ import java.util.List;
 @RequestMapping(value = "/api/sotuvchi", consumes = MediaType.APPLICATION_JSON_VALUE)
 public class SotuvchiController {
 
-    @Autowired
+   @Autowired
     private SotuvchiService sotuvchiSer;
 
     // admin

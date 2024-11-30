@@ -33,17 +33,15 @@ public class Configuration {
                     requestsConfigurer
                             .requestMatchers(SOTUVCHI_API + "/getAllSotuvchiAsDTO",
                                     SOTUVCHI_API + "/addSotuvchi",
-                                    SOTUVCHI_API + "/getActiveSotuvchi",
                                     SOTUVCHI_API + "/getInactiveSotuvchi",
                                     SOTUVCHI_API + "/changeSotuvchiDate").hasAuthority("ROLE_ADMIN")
                             .requestMatchers(SOTUVCHI_API + "/changeSotuvchiDetails").hasAuthority("ROLE_USER")
 
                             .requestMatchers(MAHSULOT_API + "/getAllMahsulot",
-                                    MAHSULOT_API + "/getInActiveMahsulot").hasAuthority("ROLE_ADMIN")
+                                    MAHSULOT_API + "/getInActiveMahsulot/{id}").hasAuthority("ROLE_ADMIN")
                             .requestMatchers(MAHSULOT_API + "/addMahsulot").hasAnyAuthority("ROLE_USER")
                             .requestMatchers(MAHSULOT_API + "/getAllMahsulotByID").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
                             .anyRequest().permitAll();
-
                 })
                 .httpBasic(Customizer.withDefaults())
                 .build();
