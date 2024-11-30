@@ -13,12 +13,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/api")
 public class AuthController {
 
-    private final LoginService loginService;
+   @Autowired
+    private LoginService loginService;
 
-    public AuthController(LoginService loginService) {
-        this.loginService = loginService;
-    }
-  
     @GetMapping(value = "/login")
     public ResponseEntity<Object> login(@RequestBody AuthLoginDTO authLoginDTO) {
         try {
@@ -30,8 +27,9 @@ public class AuthController {
         }
     }
 
-    @PostMapping(value = "/register")
-    public Sotuvchi register(@RequestBody AuthRegisterForSotuvDTO authRegisterForSotuvDTO) {
-        return loginService.register(authRegisterForSotuvDTO);
+
+    @PostMapping(value = "/reg")
+    public Sotuvchi reg(@RequestBody AuthLoginDTO dto) {
+        return loginService.reg(dto);
     }
 }

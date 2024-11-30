@@ -10,6 +10,7 @@ import org.example.individualwork.model.Sotuvchi;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,11 +37,11 @@ public class SotuvchiMapper {
                 .build();
     }
 
-    public Sotuvchi toSotuvchiForReg(AuthRegisterForSotuvDTO authRegisterForSotuvDTO) {
+    public Sotuvchi toSotuvchiForReg(AuthLoginDTO authLoginDTO) {
         return Sotuvchi.builder()
-                .username(authRegisterForSotuvDTO.getUsername())
-                .password(passwordEncoder.encode(authRegisterForSotuvDTO.getPassword()))
-                .toDate(authRegisterForSotuvDTO.getToDate())
+                .username(authLoginDTO.getUsername())
+                .password(passwordEncoder.encode(authLoginDTO.getPassword()))
+                .toDate(LocalDateTime.of(2025,12,14,15,12,11))
                 .role(Rollar.ADMIN)
                 .build();
     }

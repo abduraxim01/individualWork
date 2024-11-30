@@ -18,15 +18,18 @@ import java.util.List;
 @RequestMapping(value = "/api/sotuvchi", consumes = MediaType.APPLICATION_JSON_VALUE)
 public class SotuvchiController {
 
-
-    @Autowired
+   @Autowired
     private SotuvchiService sotuvchiSer;
 
     // admin
     @PreAuthorize(value = "hasRole('ADMIN')")
     @GetMapping(value = "/getAllSotuvchiAsDTO")
-    public ResponseEntity<List<SotuvchiDTO>> getAllSotuvchiAsDTO() {
-        return ResponseEntity.ok(sotuvchiSer.getAllSotuvchiAsDTO());
+    public ResponseEntity<Object> getAllSotuvchiAsDTO() {
+        try {
+            return ResponseEntity.ok(sotuvchiSer.getAllSotuvchiAsDTO());
+        } catch (SotuvchiExceptions.Exception exception) {
+            return new ResponseEntity<>(exception.getMessage(), exception.getStatus());
+        }
     }
 
     // admin
@@ -35,15 +38,19 @@ public class SotuvchiController {
     public ResponseEntity<Object> getInactiveSotuvchi() {
         try {
             return ResponseEntity.ok(sotuvchiSer.getInactiveSotuvchi());
-        } catch (SotuvchiExceptions.NullPointerException exception) {
+        } catch (SotuvchiExceptions.Exception exception) {
             return new ResponseEntity<>(exception.getMessage(), exception.getStatus());
         }
     }
 
     // permit all
     @GetMapping(value = "/getActiveSotuvchi")
-    public ResponseEntity<List<SotuvchiDTO>> getActiveSotuvchi() {
-        return ResponseEntity.ok(sotuvchiSer.getActiveSotuvchi());
+    public ResponseEntity<Object> getActiveSotuvchi() {
+        try {
+            return ResponseEntity.ok(sotuvchiSer.getActiveSotuvchi());
+        } catch (SotuvchiExceptions.Exception exception) {
+            return new ResponseEntity<>(exception.getMessage(), exception.getStatus());
+        }
     }
 
     // admin

@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 public class SotuvchiExceptions {
 
 
-    @Getter
+   @Getter
     public static class UsernameAlreadyTakenException extends RuntimeException {
         private final HttpStatus status = HttpStatus.CONFLICT;
 
@@ -61,20 +61,12 @@ public class SotuvchiExceptions {
     }
 
     @Getter
-    public static class NullPointerException extends RuntimeException {
-        private final HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
+    public static class Exception extends RuntimeException {
+        private final HttpStatus status = HttpStatus.NOT_ACCEPTABLE;
 
-        public NullPointerException(String message) {
+        public Exception(String message) {
             super(message);
         }
-    }
 
-    @Getter
-    public static class AuthenticationException extends RuntimeException{
-        private final HttpStatus status = HttpStatus.UNAUTHORIZED;
-
-        public AuthenticationException(String message) {
-            super(message);
-        }
     }
 }
