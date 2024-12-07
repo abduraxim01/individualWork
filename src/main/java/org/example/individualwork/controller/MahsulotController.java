@@ -61,6 +61,5 @@ public class MahsulotController {
         } catch (SotuvchiExceptions.Exception exception) {
             return new ResponseEntity<>(exception.getMessage(), exception.getStatus());
         }
-
     }
 }
