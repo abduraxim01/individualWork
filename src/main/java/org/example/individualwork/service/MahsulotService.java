@@ -37,7 +37,6 @@ public class MahsulotService {
         this.mahsulotRep = mahsulotRep;
     }
 
-    //
     // barcha mahsulot ro'yhatini olish
     public List<MahsulotDTO> getAllMahsulot() throws SotuvchiExceptions.IllegalArgumentException {
         return mahsulotMapper.toMahsulotDTOS(mahsulotRep.findAll());
