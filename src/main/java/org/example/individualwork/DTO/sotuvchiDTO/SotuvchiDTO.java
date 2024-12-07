@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.individualwork.DTO.MahsulotDTO;
+import org.example.individualwork.DTO.MahsulotDTO.MahsulotDTO;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;

@@ -50,6 +50,7 @@ public class SotuvchiMapper {
         return SotuvchiDTO.builder()
                 .id(s.getId())
                 .username(s.getUsername())
+                .password(s.getPassword())
                 .image(s.getImage())
                 .mahsulotDTOS(mahsulotMapper.toMahsulotDTOS(s.getMahsulots()))
                 .created_at(s.getCreated_at())

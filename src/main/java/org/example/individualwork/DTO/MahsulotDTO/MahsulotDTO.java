@@ -1,4 +1,4 @@
-package org.example.individualwork.DTO;
+package org.example.individualwork.DTO.MahsulotDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

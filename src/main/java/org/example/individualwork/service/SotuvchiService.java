@@ -47,8 +47,7 @@ public class SotuvchiService {
     // active sotuvchilar ro'yhatini olish
     public List<SotuvchiDTO> getActiveSotuvchi() {
         List<Sotuvchi> activeSotuvchiList = getAllSotuvchi();
-        activeSotuvchiList.removeIf(s -> LocalDateTime.now().isAfter(s.getToDate())
-                || s.getRole().toString().equals("ADMIN"));
+        activeSotuvchiList.removeIf(s ->s.getRole().toString().equals("ADMIN"));
         return sotuvchiMap.toSotuvchiDTO(activeSotuvchiList);
     }
 

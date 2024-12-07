@@ -1,6 +1,7 @@
 package org.example.individualwork.mapper;
 
-import org.example.individualwork.DTO.MahsulotDTO;
+import org.example.individualwork.DTO.MahsulotDTO.MahsulotDTO;
+import org.example.individualwork.DTO.MahsulotDTO.MahsulotDTOForReq;
 import org.example.individualwork.model.Mahsulot;
 import org.example.individualwork.model.Sotuvchi;
 
@@ -9,15 +10,15 @@ import java.util.List;
 
 public class MahsulotMapper {
 
-    public Mahsulot toMahsulot(Sotuvchi sotuvchi, MahsulotDTO dto) {
+    public Mahsulot toMahsulot(Sotuvchi sotuvchi, MahsulotDTOForReq mahsulotDTOForReq) {
         return Mahsulot.builder()
-                .body(dto.getBody())
-                .title(dto.getTitle())
-                .discount(dto.getDiscount())
-                .price(dto.getPrice())
-                .image(dto.getImage())
-                .toDate(dto.getToDate())
-                .fromDate(dto.getFromDate())
+                .body(mahsulotDTOForReq.getBody())
+                .title(mahsulotDTOForReq.getTitle())
+                .discount(mahsulotDTOForReq.getDiscount())
+                .price(mahsulotDTOForReq.getPrice())
+                .image(mahsulotDTOForReq.getImage())
+                .toDate(mahsulotDTOForReq.getToDate())
+                .fromDate(mahsulotDTOForReq.getFromDate())
                 .sotuvchi(sotuvchi)
                 .build();
     }
