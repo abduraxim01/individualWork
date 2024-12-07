@@ -35,7 +35,7 @@ public class Configuration {
                                     SOTUVCHI_API + "/addSotuvchi",
                                     SOTUVCHI_API + "/getInactiveSotuvchi",
                                     SOTUVCHI_API + "/changeSotuvchiDate").hasAuthority("ROLE_ADMIN")
-                            .requestMatchers(SOTUVCHI_API + "/changeSotuvchiDetails").hasAuthority("ROLE_USER")
+                            .requestMatchers(SOTUVCHI_API + "/changeSotuvchiDetails").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
 
                             .requestMatchers(MAHSULOT_API + "/getAllMahsulot",
                                     MAHSULOT_API + "/getInActiveMahsulot/{id}").hasAuthority("ROLE_ADMIN")

@@ -3,7 +3,8 @@ package org.example.individualwork.service;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.apache.logging.log4j.LogManager;
-import org.example.individualwork.DTO.MahsulotDTO;
+import org.example.individualwork.DTO.MahsulotDTO.MahsulotDTO;
+import org.example.individualwork.DTO.MahsulotDTO.MahsulotDTOForReq;
 import org.example.individualwork.exception.SotuvchiExceptions;
 import org.example.individualwork.mapper.MahsulotMapper;
 import org.example.individualwork.model.Mahsulot;
@@ -36,7 +37,6 @@ public class MahsulotService {
         this.mahsulotRep = mahsulotRep;
     }
 
-    //
     // barcha mahsulot ro'yhatini olish
     public List<MahsulotDTO> getAllMahsulot() throws SotuvchiExceptions.IllegalArgumentException {
         return mahsulotMapper.toMahsulotDTOS(mahsulotRep.findAll());
@@ -50,7 +50,7 @@ public class MahsulotService {
     }
 
     // active mahsulotlar ro'yhatini olish
-    public List<MahsulotDTO> getActiveMahsulot() {
+    public List<MahsulotDTO>  getActiveMahsulot() {
         List<MahsulotDTO> activeMahsulotList = getAllMahsulot();
         activeMahsulotList.removeIf(s -> LocalDateTime.now().isAfter(s.getToDate())
                 || LocalDateTime.now().isBefore(s.getFromDate()));
@@ -79,31 +79,31 @@ public class MahsulotService {
 
     // sotuvchi uchun
     // mahsulot qo'shish
-    public MahsulotDTO addMahsulot(MahsulotDTO mahsulotDTO) {
+    public MahsulotDTO addMahsulot(MahsulotDTOForReq mahsulotDTOForReq) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (mahsulotDTO == null) {
+        if (mahsulotDTOForReq == null) {
             throw new SotuvchiExceptions.IllegalArgumentException("Mahsulot null bo'la olmaydi");
         }
         Arrays.asList(
-                mahsulotDTO.getTitle(),
-                mahsulotDTO.getPrice(),
-                mahsulotDTO.getFromDate(),
-                mahsulotDTO.getDiscount(),
-                mahsulotDTO.getToDate()
+                mahsulotDTOForReq.getTitle(),
+                mahsulotDTOForReq.getPrice(),
+                mahsulotDTOForReq.getFromDate(),
+                mahsulotDTOForReq.getDiscount(),
+                mahsulotDTOForReq.getToDate()
         ).forEach(field -> {
             if (field == null) {
                 throw new SotuvchiExceptions.IllegalArgumentException("Mahsulotda null field  mavjud");
             }
         });
-        if (mahsulotDTO.getFromDate().isAfter(mahsulotDTO.getToDate())
-                || mahsulotDTO.getToDate().isBefore(LocalDateTime.now())
-                || mahsulotDTO.getFromDate().isBefore(LocalDateTime.now())) {
+        if (mahsulotDTOForReq.getFromDate().isAfter(mahsulotDTOForReq.getToDate())
+                || mahsulotDTOForReq.getToDate().isBefore(LocalDateTime.now())
+                || mahsulotDTOForReq.getFromDate().isBefore(LocalDateTime.now())) {
             throw new SotuvchiExceptions.IllegalArgumentException("Mahsulotni amal qilish muddati noto'g'ri");
         }
         Mahsulot mahsulot = mahsulotMapper.toMahsulot(
-                ((Sotuvchi) authentication.getPrincipal()), mahsulotDTO);
+                ((Sotuvchi) authentication.getPrincipal()), mahsulotDTOForReq);
         logger.info("UserID: {} \n Mahsulot title: {}",
-                ((Sotuvchi) authentication.getPrincipal()).getId(), mahsulotDTO.getTitle());
+                ((Sotuvchi) authentication.getPrincipal()).getId(), mahsulotDTOForReq.getTitle());
         return mahsulotMapper.toMahsulotDTO(mahsulotRep.save(mahsulot));
     }
 }

@@ -1,10 +1,10 @@
 package org.example.individualwork.controller;
 
-import org.example.individualwork.DTO.MahsulotDTO;
+import org.example.individualwork.DTO.MahsulotDTO.MahsulotDTO;
+import org.example.individualwork.DTO.MahsulotDTO.MahsulotDTOForReq;
 import org.example.individualwork.exception.SotuvchiExceptions;
 import org.example.individualwork.service.MahsulotService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -55,12 +55,11 @@ public class MahsulotController {
     // sotuvchi uchun
     @PreAuthorize(value = "hasRole('USER')")
     @PostMapping(value = "/addMahsulot")
-    public ResponseEntity<Object> addMahsulot(@RequestBody MahsulotDTO mahsulotDTO) {
+    public ResponseEntity<Object> addMahsulot(@RequestBody MahsulotDTOForReq mahsulotDTOForReq) {
         try {
-            return ResponseEntity.ok(mahsulotSer.addMahsulot(mahsulotDTO));
+            return ResponseEntity.ok(mahsulotSer.addMahsulot(mahsulotDTOForReq));
         } catch (SotuvchiExceptions.Exception exception) {
             return new ResponseEntity<>(exception.getMessage(), exception.getStatus());
         }
-
     }
 }

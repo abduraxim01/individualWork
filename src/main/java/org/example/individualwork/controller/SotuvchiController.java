@@ -63,7 +63,7 @@ public class SotuvchiController {
     }
 
     // user
-    @PreAuthorize(value = "hasRole('USER')")
+    @PreAuthorize(value = "hasAnyRole('USER','ADMIN')")
     @PostMapping(value = "/changeSotuvchiDetails")
     public ResponseEntity<Object> changeSotuvchiDetails(@RequestBody SotuvOzgarQiymat sotuvOzgarQiymat) {
         try {
